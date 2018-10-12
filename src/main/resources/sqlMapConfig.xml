@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <settings>
+        <!-- 开启延迟加载，默认值为true -->
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <!-- 设置积极懒加载，默认值为true -->
+        <setting name="aggressiveLazyLoading" value="false"/>
+        <!-- 数据库中下划线法命名在字段自动映射为驼峰法 -->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <!-- 开启二级缓存 -->
+        <setting name="cacheEnabled" value="true"/>
+    </settings>
+
+    <!--自定义别名-->
+    <!--通过package, 可以直接指定package的名字， mybatis会自动扫描你指定包下面的javabean,  -->
+    <!--并且默认设置一个别名，默认的名字为： javabean 的首字母小写的非限定类名来作为它的别名。  -->
+    <!--也可在javabean 加上注解@Alias 来自定义别名， 例如： @Alias(employee)  -->
+    <typeAliases>
+        <package name="cn.idea.modules"/>
+    </typeAliases>
+
+</configuration>

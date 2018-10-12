@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.idea.modules.student.dao.StudentMapper">
+
+    <sql id="visibleInfo">
+      id, name, nickname, birthday, parent_name, phone, alternate_number, wechat, addr, source_id, ctime, eid, state, degree, sales_stage, expected_date, contract_date
+    </sql>
+
+    <select id="findByPhone" resultType="StudentVo">
+        SELECT
+        <include refid="visibleInfo"/>
+        FROM tbl_student
+        WHERE phone = #{phone} AND valid = 1
+    </select>
+
+    <insert id="add" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO tbl_student(name, nickname, birthday, parent_name, phone, alternate_number, wechat, addr, source_id, ctime, eid, state, degree, sales_stage, expected_date, contract_date)
+        VALUES (#{name}, #{nickname}, #{birthday}, #{parentName}, #{phone}, #{alternateNumber}, #{wechat}, #{addr}, #{sourceId}, #{ctime}, #{eid}, #{state}, #{degree}, #{salesStage}, #{expectedDate}, #{contractDate})
+    </insert>
+
+    <update id="update">
+        UPDATE tbl_student
+        <set>
+            <if test="name != null">name = #{name},</if>
+            <if test="nickname != null">nickname = #{nickname},</if>
+            <if test="birthday != null">birthday = #{birthday},</if>
+            <if test="parentName != null">parent_name = #{parentName},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="alternateNumber != null">alternate_number = #{alternateNumber},</if>
+            <if test="wechat != null">wechat = #{wechat},</if>
+            <if test="addr != null">addr = #{addr},</if>
+            <if test="sourceId != null">source_id = #{sourceId},</if>
+            <if test="eid != null">eid = #{eid},</if>
+            <if test="state != null">state = #{state},</if>
+            <if test="degree != null">degree = #{degree},</if>
+            <if test="salesStage != null">sales_stage = #{salesStage},</if>
+            <if test="expectedDate != null">expected_date = #{expectedDate}</if>
+        </set>
+        WHERE id = #{id} AND valid = 1
+    </update>
+    <select id="find" resultType="StudentVo">
+        SELECT
+        <include refid="visibleInfo"/>
+        FROM tbl_student
+        WHERE id = #{id} AND valid = 1
+    </select>
+
+    <select id="viewStudentToAudition" resultType="studentVo">
+        SELECT
+        <include refid="visibleInfo"/>
+        FROM tbl_student
+        WHERE expected_date = #{expectedDate}
+        AND valid = 1
+    </select>
+
+    <update id="delete">
+        UPDATE tbl_student
+        SET valid = 0
+        WHERE id = #{id}
+    </update>
+    <sql id="queryCondition">
+        valid = 1
+        <if test="name != null">
+            AND name like '%${name}%'
+        </if>
+        <if test="nickname != null">
+            AND nickname like '%${nickname}%'
+        </if>
+        <if test="birthday != null">
+            AND birthday like '%${birthday}%'
+        </if>
+        <if test="parentName != null">
+            AND parent_name like '%${parentName}%'
+        </if>
+        <if test="phone != null">
+            AND phone like '%${phone}%'
+        </if>
+        <if test="alternateNumber != null">
+            AND alter_number like '%${alternateNumber}%'
+        </if>
+        <if test="wechat != null">
+            AND wechat like '%${wechat}%'
+        </if>
+        <if test="addr != null">
+            AND addr like '%${addr}%'
+        </if>
+        <if test="sourceId != null">
+            AND source_id like '%${sourceId}%'
+        </if>
+        <if test="ctime != null">
+            AND ctime like '%${ctime}%'
+        </if>
+        <if test="eid != null">
+            AND eid like '%${eid}%'
+        </if>
+        <if test="state != null">
+            AND state like '%${state}%'
+        </if>
+        <if test="degree != null">
+            AND degree like '%${degree}%'
+        </if>
+        <if test="salesStage != null">
+            AND sales_stage like '%${salesStage}%'
+        </if>
+        <if test="expectedDate!= null">
+            AND expected_date like '%${expectedDate}%'
+        </if>
+        <if test="contractDate != null">
+            AND contract_date like '%${contractDate}%'
+        </if>
+    </sql>
+
+    <select id="getTotalNum" resultType="int">
+        SELECT COUNT(1)
+        FROM tbl_student
+        WHERE valid = 1
+    </select>
+
+    <select id="findPagedList" resultType="StudentVo">
+        SELECT
+        <include refid="visibleInfo"/>
+        FROM tbl_student
+        WHERE valid = 1
+        LIMIT ${offset},${size}
+    </select>
+
+    <select id="getQueryTotalNum" resultType="int" parameterType="StudentQVo">
+        SELECT COUNT(1)
+        FROM tbl_student
+        <where>
+            <include refid="queryCondition"/>
+        </where>
+    </select>
+
+    <select id="queryPagedList" parameterType="StudentQVo"
+            resultType="StudentVo">
+        SELECT
+        <include refid="visibleInfo"/>
+        FROM tbl_student
+        <where>
+            <include refid="queryCondition"/>
+        </where>
+        <if test="ascFlag == false">
+            ORDER BY id DESC
+        </if>
+        LIMIT ${offset}, ${size}
+    </select>
+</mapper>
