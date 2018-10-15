@@ -23,7 +23,11 @@
         WHERE id=#{id} AND valid=1
     </update>
     <sql id="visibleInfo">
+<<<<<<< HEAD
         id, name, school, phone, init_pwd, auth
+=======
+        id, name, school, phone, init_pwd
+>>>>>>> 7cb7a9d8ca24c2a7882d480f525ee7b7fd4e1a83
     </sql>
     <select id="find" resultType="marketingMangerVo">
         SELECT

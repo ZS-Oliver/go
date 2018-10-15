@@ -1,10 +1,10 @@
 package cn.idea.modules.audiClasses.web;
 
-import cn.idea.modules.audiClasses.bean.AudiClassesVo;
 import cn.idea.utils.mock.test.MyUserTxTestNGSpringContextTests;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.annotation.Rollback;
 import org.testng.annotations.Test;
+import cn.idea.modules.audiClasses.bean.AudiClassesVo;
 
 public class AudiClassesControllerTest extends MyUserTxTestNGSpringContextTests {
     private MockHttpSession session = new MockHttpSession();

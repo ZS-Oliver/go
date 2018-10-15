@@ -54,6 +54,7 @@ public class AudiClassesController {
      * @apiParam {Integer} total 总量
      * @apiParam {String} [sids] 学员id,以":"分隔
      * @apiParam {String} [site] 地点
+     * @apiSuccessExample {json}
      */
     @PostMapping
     @RequiresPermissions(CLASSES + OperationConst.CREATE)
@@ -91,7 +92,7 @@ public class AudiClassesController {
     public AudiClassesVo view(@SessionAttribute(SessionConst.AUTH) Byte auth,
                               @SessionAttribute(SessionConst.UID) Integer uid,
                               @PathVariable("id") Integer id) throws ServiceException {
-        if (auth == Role.EMPLOYEE.getCode() && !studentMapper.find(id).getEid().equals(uid)) {
+        if (auth == Role.EMPLOYEE.getCode() && studentMapper.find(id).getEid().equals(uid)) {
             throw new ServiceException("该员工座下不存在该学员");
         }
         return audiClassesService.view(id);
