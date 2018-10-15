@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.idea.modules.marketingManager.dao.MarketingManagerMapper">
+
+    <select id="findByPhone" resultType="marketingMangerVo">
+        SELECT *
+        FROM tbl_marketing_manager
+        WHERE phone = #{phone}
+    </select>
+
+    <!-- basic operation -->
+    <insert id="add" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO tbl_marketing_manager (name, phone, school) VALUES
+            (#{name}, #{phone}, #{school})
+    </insert>
+    <update id="update">
+        UPDATE tbl_marketing_manager
+        <set>
+            <if test="name!=null">name = #{name},</if>
+            <if test="phone!=null">phone = #{phone},</if>
+            <if test="school!=null">school=#{school}</if>
+        </set>
+        WHERE id=#{id} AND valid=1
+    </update>
+    <sql id="visibleInfo">
+        id, name, school, phone, init_pwd, auth
+    </sql>
+    <select id="find" resultType="marketingMangerVo">
+        SELECT
+        <include refid="visibleInfo"/>
+        FROM tbl_marketing_manager
+        WHERE id = #{id} AND valid = 1
+    </select>
+    <update id="delete">
+        UPDATE tbl_marketing_manager
+        SET valid = 0
+        WHERE id = #{id}
+    </update>
+    <sql id="queryCondition">
+        valid = 1
+        <if test="name != null">
+            AND name like '%${name}%'
+        </if>
+        <if test="phone != null">
+            AND phone like '%${phone}%'
+        </if>
+        <if test="school != null">
+            AND school like '%${school}%'
+        </if>
+    </sql>
+    <select id="getTotalNum" resultType="int">
+        SELECT COUNT(1)
+        FROM tbl_marketing_manager
+        WHERE valid = 1
+    </select>
+    <select id="findPagedList" resultType="marketingMangerVo">
+        SELECT
+        <include refid="visibleInfo"/>
+        FROM tbl_marketing_manager
+        WHERE valid = 1
+        LIMIT ${offset}, ${size}
+    </select>
+
+    <select id="getQueryTotalNum" resultType="int" parameterType="marketingMangerQVo">
+        SELECT COUNT(1)
+        FROM tbl_marketing_manager
+        <where>
+            <include refid="queryCondition"/>
+        </where>
+    </select>
+
+    <select id="queryPagedList" parameterType="marketingMangerQVo"
+            resultType="employeeVo">
+        SELECT
+        <include refid="visibleInfo"/>
+        FROM tbl_marketing_manager
+        <where>
+            <include refid="queryCondition"/>
+        </where>
+        <if test="ascFlag == false">
+            ORDER BY id DESC
+        </if>
+        LIMIT ${offset}, ${size}
+    </select>
+
+</mapper>

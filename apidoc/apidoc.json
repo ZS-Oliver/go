@@ -1,0 +1,20 @@
+{
+  "name": "",
+  "version": "1.0.0-SNAPSHOT",
+  "description": "",
+  "title": "",
+  "url": "",
+  "template": {
+    "forceLanguage": "zh_cn",
+    "withCompare": false,
+    "withGenerator": true
+  },
+  "header": {
+    "title": "通用说明",
+    "filename": "header.md"
+  },
+  "footer": {
+    "title": "联系我们",
+    "filename": "footer.md"
+  }
+}

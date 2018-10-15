@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.idea.modules.source.dao.SourceMapper">
+
+    <sql id="visibleInfo">
+        id,type,source
+    </sql>
+    <select id="getSourceListByType" resultType="String">
+        SELECT
+        source
+        FROM tbl_source
+        WHERE type = #{type} AND valid = 1
+    </select>
+
+    <select id="getIdByTypeAndSource" resultType="int">
+        SELECT
+        id
+        FROM tbl_source
+        WHERE type = #{type} AND source = #{source} AND valid = 1
+    </select>
+
+    <insert id="add" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO tbl_source(type, source)
+        VALUES (#{type}, #{source})
+    </insert>
+
+    <select id="find" resultType="SourceVo">
+        SELECT
+        <include refid="visibleInfo"/>
+        FROM tbl_source
+        WHERE id = #{id} AND valid = 1
+    </select>
+
+    <update id="update">
+        UPDATE tbl_source
+        <set>
+            <if test="source != null">source = #{source}</if>
+        </set>
+        WHERE id = #{id} AND valid = 1
+    </update>
+
+    <sql id="queryCondition">
+        valid = 1
+        <if test="type != null">
+            AND type = '${type}'
+        </if>
+        <if test="sourceSet != null">
+            AND source IN
+            <foreach collection="sourceSet" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+    </sql>
+
+    <select id="getTotalNum" resultType="int">
+        SELECT COUNT(1)
+        FROM tbl_source
+        WHERE valid = 1
+    </select>
+
+    <select id="findPagedList" resultType="SourceVo">
+        SELECT
+        <include refid="visibleInfo"/>
+        FROM tbl_source
+        WHERE valid = 1
+        LIMIT ${offset},${size}
+    </select>
+
+    <select id="getQueryTotalNum" resultType="int" parameterType="SourceVo">
+        SELECT COUNT(1)
+        FROM tbl_source
+        <where>
+            <include refid="queryCondition"/>
+        </where>
+    </select>
+
+    <select id="queryPagedList" parameterType="SourceVo"
+            resultType="SourceVo">
+        SELECT
+        <include refid="visibleInfo"/>
+        FROM tbl_source
+        <where>
+            <include refid="queryCondition"/>
+        </where>
+        <if test="ascFlag == false">
+            ORDER BY id DESC
+        </if>
+        LIMIT ${offset}, ${size}
+    </select>
+</mapper>
