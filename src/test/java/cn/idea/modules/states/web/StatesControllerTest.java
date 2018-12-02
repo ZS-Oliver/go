@@ -16,12 +16,21 @@ public class StatesControllerTest extends MyUserTxTestNGSpringContextTests {
     public void testCreate() throws Exception {
         session = employeeLoginSuccess();
         StatesVo sv = new StatesVo();
+<<<<<<< HEAD
         sv.setSid(1);
+=======
+        sv.setSid(6);
+        sv.setCurStage((byte) 2);
+>>>>>>> a28bc316e88c3a51e6fa98a44e069e0c0c2b4ff2
         sv.setContent("???");
         sv.setNextState((byte) 2);
         sv.setNextDegree((byte) 2);
         sv.setNextStage((byte) 2);
+<<<<<<< HEAD
         sv.setExpectedDate("20181005");
+=======
+        sv.setExceptedDate("20181005");
+>>>>>>> a28bc316e88c3a51e6fa98a44e069e0c0c2b4ff2
         mockMvc.perform(postJson(session, PATH, sv))
                 .andExpect(isOKStatus());
 
@@ -30,7 +39,11 @@ public class StatesControllerTest extends MyUserTxTestNGSpringContextTests {
     @Test
     public void testView() throws Exception {
         session = employeeLoginSuccess();
+<<<<<<< HEAD
         mockMvc.perform(getJson(session, PATH + "/1"))
+=======
+        mockMvc.perform(getJson(session, PATH + "/3"))
+>>>>>>> a28bc316e88c3a51e6fa98a44e069e0c0c2b4ff2
                 .andExpect(isOKStatus());
     }
 
@@ -49,6 +62,7 @@ public class StatesControllerTest extends MyUserTxTestNGSpringContextTests {
         mockMvc.perform(deleteJson(session, PATH + "/3"))
                 .andExpect(isOKStatus());
     }
+<<<<<<< HEAD
 
     @Test
     public void testStudentStates() throws Exception {
@@ -56,4 +70,6 @@ public class StatesControllerTest extends MyUserTxTestNGSpringContextTests {
         mockMvc.perform(getJson(session, PATH + "/student/7"))
                 .andExpect(isOKStatus());
     }
+=======
+>>>>>>> a28bc316e88c3a51e6fa98a44e069e0c0c2b4ff2
 }

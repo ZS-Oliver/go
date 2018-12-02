@@ -39,7 +39,11 @@ public class SourceControllerTest extends MyUserTxTestNGSpringContextTests {
     @Test
     public void testView() throws Exception {
         session = adminLoginSuccess();
+<<<<<<< HEAD
         mockMvc.perform(getJson(session, PATH + "/6"))
+=======
+        mockMvc.perform(getJson(session, PATH + "/2"))
+>>>>>>> a28bc316e88c3a51e6fa98a44e069e0c0c2b4ff2
                 .andExpect(isOKStatus());
     }
 
@@ -57,6 +61,7 @@ public class SourceControllerTest extends MyUserTxTestNGSpringContextTests {
                 .andExpect(isConflictStatus());
 
     }
+<<<<<<< HEAD
 
     @Test
     public void testStatuses() throws Exception {
@@ -64,4 +69,6 @@ public class SourceControllerTest extends MyUserTxTestNGSpringContextTests {
         mockMvc.perform(getJson(session, PATH + "/states"))
                 .andExpect(isOKStatus());
     }
+=======
+>>>>>>> a28bc316e88c3a51e6fa98a44e069e0c0c2b4ff2
 }

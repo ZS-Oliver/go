@@ -40,16 +40,28 @@ public class MarketingManagerControllerTest extends MyTxTestNGSpringContextTests
 
     @Test
     public void testView() throws Exception {
+<<<<<<< HEAD
         mockMvc.perform(getJson(session, PATH + "/1"))
+=======
+        mockMvc.perform(getJson(session, PATH + "/7"))
+>>>>>>> a28bc316e88c3a51e6fa98a44e069e0c0c2b4ff2
                 .andExpect(isOKStatus());
     }
 
     @Test
+<<<<<<< HEAD
     @Rollback(false)
     public void testUpdate() throws Exception {
         MarketingManagerVo mv = new MarketingManagerVo();
         mv.setSchool("东北大学");
         mockMvc.perform(putJson(session, PATH + "/1", mv))
+=======
+    public void testUpdate() throws Exception {
+        MarketingManagerVo mv = new MarketingManagerVo();
+        mv.setName("张硕");
+        mv.setPhone("11111111111");
+        mockMvc.perform(putJson(session, PATH + "/7", mv))
+>>>>>>> a28bc316e88c3a51e6fa98a44e069e0c0c2b4ff2
                 .andExpect(isOKStatus());
     }
 

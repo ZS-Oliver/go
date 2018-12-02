@@ -26,7 +26,8 @@
         id, name, school, phone, init_pwd, auth
     </sql>
     <select id="find" resultType="marketingMangerVo">
-        SELECT *
+        SELECT
+        <include refid="visibleInfo"/>
         FROM tbl_marketing_manager
         WHERE id = #{id} AND valid = 1
     </select>

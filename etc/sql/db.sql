@@ -24,7 +24,10 @@ DROP TABLE IF EXISTS `tbl_class`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tbl_class` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+<<<<<<< HEAD
   `name` VARCHAR(50) DEFAULT NULL COMMENT '课程名',
+=======
+>>>>>>> a28bc316e88c3a51e6fa98a44e069e0c0c2b4ff2
   `audition_time` int(11) NOT NULL COMMENT '试听时间',
   `op_id` int(11) DEFAULT NULL COMMENT '创建人',
   `total` int(11) NOT NULL COMMENT '总容量',
@@ -32,7 +35,11 @@ CREATE TABLE `tbl_class` (
   `site` char(50) DEFAULT NULL COMMENT '地点',
   `valid` tinyint(4) DEFAULT '1' COMMENT '是否有效',
   PRIMARY KEY (`id`),
+<<<<<<< HEAD
   KEY `tbl_class_tbl_employee_id_fk` (`op_id`),
+=======
+  KEY `tbl_class_tbl_employee_id_fk` (`eid`),
+>>>>>>> a28bc316e88c3a51e6fa98a44e069e0c0c2b4ff2
   CONSTRAINT `tbl_class_tbl_employee_id_fk` FOREIGN KEY (`op_id`) REFERENCES `tbl_employee` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='试听班级';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -81,7 +88,11 @@ CREATE TABLE `tbl_journal` (
   `excepted_date` char(8) DEFAULT NULL COMMENT '意向日期',
   `valid` tinyint(4) DEFAULT '1' COMMENT '是否有效',
   PRIMARY KEY (`id`),
+<<<<<<< HEAD
   KEY `tbl_journal_tbl_employee_id_fk` (`op_id`),
+=======
+  KEY `tbl_journal_tbl_employee_id_fk` (`eid`),
+>>>>>>> a28bc316e88c3a51e6fa98a44e069e0c0c2b4ff2
   KEY `tbl_journal_tbl_student_id_fk` (`sid`),
   CONSTRAINT `tbl_journal_tbl_employee_id_fk` FOREIGN KEY (`op_id`) REFERENCES `tbl_employee` (`id`),
   CONSTRAINT `tbl_journal_tbl_student_id_fk` FOREIGN KEY (`sid`) REFERENCES `tbl_student` (`id`)
@@ -135,7 +146,10 @@ CREATE TABLE `tbl_student` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
   `name` char(20) NOT NULL COMMENT '姓名',
   `nickname` char(20) DEFAULT NULL COMMENT '昵称',
+<<<<<<< HEAD
   `age` int(11) DEFAULT NULL COMMENT '年龄',
+=======
+>>>>>>> a28bc316e88c3a51e6fa98a44e069e0c0c2b4ff2
   `birthday` char(8) DEFAULT NULL COMMENT '生日',
   `parent_name` char(20) DEFAULT NULL COMMENT '家长姓名',
   `phone` char(11) NOT NULL COMMENT '手机号',
@@ -144,7 +158,11 @@ CREATE TABLE `tbl_student` (
   `addr` char(50) DEFAULT NULL COMMENT '家庭住址',
   `source_id` int(11) DEFAULT NULL COMMENT '来源id',
   `ctime` int(11) DEFAULT NULL COMMENT '创建时间',
+<<<<<<< HEAD
   `eid` int(11) DEFAULT NULL COMMENT '创建人id',
+=======
+  `op_id` int(11) DEFAULT NULL COMMENT '创建人id',
+>>>>>>> a28bc316e88c3a51e6fa98a44e069e0c0c2b4ff2
   `state` tinyint(4) DEFAULT NULL COMMENT '学员状态',
   `degree` tinyint(4) DEFAULT NULL COMMENT '重要程度',
   `sales_stage` tinyint(4) DEFAULT NULL COMMENT '销售阶段',
@@ -154,8 +172,13 @@ CREATE TABLE `tbl_student` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `tbl_student_phone_uindex` (`phone`),
   KEY `tbl_student_tbl_employee_id_fk` (`eid`),
+<<<<<<< HEAD
   KEY `tbl_student_tbl_source_id_fk` (`source_id`),
   CONSTRAINT `tbl_student_tbl_employee_id_fk` FOREIGN KEY (`eid`) REFERENCES `tbl_employee` (`id`),
+=======
+  KEY `tbl_student_tbl_source_id_fk` (`sourceId`),
+  CONSTRAINT `tbl_student_tbl_employee_id_fk` FOREIGN KEY (`op_id`) REFERENCES `tbl_employee` (`id`),
+>>>>>>> a28bc316e88c3a51e6fa98a44e069e0c0c2b4ff2
   CONSTRAINT `tbl_student_tbl_source_id_fk` FOREIGN KEY (`source_id`) REFERENCES `tbl_source` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='学生表';
 /*!40101 SET character_set_client = @saved_cs_client */;
