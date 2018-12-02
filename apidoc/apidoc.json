@@ -1,0 +1,20 @@
+{
+  "name": "安杰围棋学员管理系统",
+  "version": "1.0.0-SNAPSHOT",
+  "description": "安杰围棋学员管理系统的后台程序，为前端提供RESTful的HTTP服务",
+  "title": "安杰围棋学员管理系统REST API",
+  "url": "",
+  "template": {
+    "forceLanguage": "zh_cn",
+    "withCompare": false,
+    "withGenerator": true
+  },
+  "header": {
+    "title": "通用说明",
+    "filename": "header.md"
+  },
+  "footer": {
+    "title": "联系我们",
+    "filename": "footer.md"
+  }
+}

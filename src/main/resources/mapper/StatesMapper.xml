@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.idea.modules.states.dao.StatesMapper">
+
+    <sql id="visibleInfo">
+        id, op_id, sid, ctime, cur_stage, content, next_state, next_degree, next_stage, expected_date
+    </sql>
+    <select id="findBySid" resultType="statesVo">
+        SELECT
+        <include refid="visibleInfo"/>
+        FROM tbl_journal
+        WHERE sid=#{sid} AND valid = 1
+        ORDER BY id DESC
+    </select>
+
+    <insert id="add" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO tbl_journal (op_id, sid, ctime, cur_stage, content, next_state, next_degree, next_stage, expected_date)
+        VALUES (#{opId}, #{sid}, #{ctime}, #{curStage}, #{content}, #{nextState}, #{nextDegree}, #{nextStage},
+                #{expectedDate})
+    </insert>
+
+    <select id="find" resultType="statesVo">
+        SELECT *
+        FROM tbl_journal
+        WHERE id = #{id} AND valid = 1
+    </select>
+
+    <update id="delete">
+        UPDATE tbl_journal
+        SET valid = 0
+        WHERE id = #{id} AND valid = 1
+    </update>
+
+    <sql id="queryCondition">
+        valid = 1
+        <if test="opId != null">
+            AND op_id = #{opId}
+        </if>
+        <if test="sid != null">
+            AND sid = #{sid}
+        </if>
+        <if test="ctimeLow != null">
+            AND ctime &gt;= #{ctimeLow}
+        </if>
+        <if test="ctimeHigh != null">
+            AND ctime &lt;= #{ctimeHigh}
+        </if>
+        <if test="curStage != null">
+            AND cur_stage like '%${curStage}%'
+        </if>
+        <if test="content != null">
+            AND content like '%${content}%'
+        </if>
+        <if test="nextStage != null">
+            AND next_stage like '%${nextStage}%'
+        </if>
+        <if test="nextDegree != null">
+            AND next_degree like '%${nextDegree}%'
+        </if>
+        <if test="nextState != null">
+            AND next_state like '%${nextState}%'
+        </if>
+        <if test="expectedDateLow != null">
+            AND expected_date &gt;= {expectedDateLow}
+        </if>
+        <if test="expectedDateHigh != null">
+            AND expected_date &lt;= {expectedDateHigh}
+        </if>
+    </sql>
+
+    <select id="getTotalNum" resultType="int">
+        SELECT COUNT(1)
+        FROM tbl_journal
+        WHERE valid = 1
+    </select>
+
+    <select id="findPagedList" resultType="statesVo">
+        SELECT
+        <include refid="visibleInfo"/>
+        FROM tbl_journal
+        WHERE valid = 1
+        LIMIT ${offset},${size}
+    </select>
+
+    <select id="getQueryTotalNum" resultType="int" parameterType="statesQVo">
+        SELECT COUNT(1)
+        FROM tbl_journal
+        <where>
+            <include refid="queryCondition"/>
+        </where>
+    </select>
+
+    <select id="queryPagedList" parameterType="statesQVo"
+            resultType="statesVo">
+        SELECT
+        <include refid="visibleInfo"/>
+        FROM tbl_journal
+        <where>
+            <include refid="queryCondition"/>
+        </where>
+        <if test="ascFlag == false">
+            ORDER BY id DESC
+        </if>
+        LIMIT ${offset}, ${size}
+    </select>
+</mapper>

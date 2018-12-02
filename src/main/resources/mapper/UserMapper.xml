@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.idea.modules.security.dao.UserMapper">
+
+    <!-- 市场经理部分 -->
+
+    <update id="updatePwd4MarketingManager">
+        UPDATE tbl_marketing_manager
+        SET passwd = #{pwd}, init_pwd = 0
+        WHERE phone = #{phone} AND valid = 1
+    </update>
+
+    <select id="getPwd4MarketingManager" resultType="java.lang.String">
+        SELECT passwd
+        FROM tbl_marketing_manager
+        WHERE phone = #{phone} AND valid = 1
+    </select>
+
+    <update id="resetMarketingManagerPwd">
+        UPDATE tbl_marketing_manager
+        SET passwd = #{pwd}, init_pwd = 1
+        WHERE id = #{id} AND valid = 1
+    </update>
+
+    <!-- 厂内员工部分 -->
+
+    <select id="getPwd4Employee" resultType="java.lang.String">
+        SELECT passwd
+        FROM tbl_employee
+        <include refid="employeeValidWhere"/>
+    </select>
+
+    <update id="updatePwd4Employee">
+        UPDATE tbl_employee
+        SET passwd= #{pwd}, init_pwd = 0
+        <include refid="employeeValidWhere"/>
+    </update>
+    <update id="resetEmployeePwd">
+        UPDATE tbl_employee
+        SET passwd = #{pwd}, init_pwd = 1
+        WHERE id = #{id} AND valid = 1
+    </update>
+
+    <sql id="employeeValidWhere">
+        WHERE phone = #{phone} AND valid = 1
+    </sql>
+
+</mapper>

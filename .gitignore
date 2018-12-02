@@ -1,0 +1,8 @@
+# dirs
+/.idea
+/target
+/apidoc/out
+
+
+#files
+*.iml
